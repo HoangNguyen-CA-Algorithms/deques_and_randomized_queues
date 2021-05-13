@@ -14,10 +14,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private int end;
     private int size;
 
+    // puts every element in q into a new array of a given size.
     private Item[] reformatQ(int size){
 
         Item[] array = (Item[]) new Object[size];
-
 
         int index = 0;
         for (int i = 0; i <= end; i++){
@@ -81,17 +81,18 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size == 0) throw new NoSuchElementException();
 
         int random = StdRandom.uniform(end);
-        while (q[random] == null){
-            random = StdRandom.uniform(end);
-        }
 
-        Item item = q[random];
-        q[random] = null;
+        // swap random element with last element and remove it
+        Item removed = q[random];
+
+        this.end--;
+        q[random] = q[end];
+        q[end] = null;
 
         size--;
-        resize();
 
-        return item;
+        resize();
+        return removed;
     }
 
     // return a random item (but do not remove it)
@@ -99,9 +100,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size == 0) throw new NoSuchElementException();
 
         int random = StdRandom.uniform(end);
-        while (q[random] == null){
-            random = StdRandom.uniform(end);
-        }
 
         return q[random];
     }

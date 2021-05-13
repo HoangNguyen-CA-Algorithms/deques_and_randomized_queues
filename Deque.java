@@ -59,7 +59,6 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null) throw new IllegalArgumentException();
 
         Node node = new Node(item);
-
         if (size == 0){
             this.first = node;
             this.last = node;
