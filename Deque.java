@@ -46,16 +46,12 @@ public class Deque<Item> implements Iterable<Item> {
         if (size == 0){
             this.first = node;
             this.last = node;
-            this.size++;
         }else{
-            this.first.prev = node.next;
+            this.first.prev = node;
             node.next = this.first;
-
             this.first = node;
-            this.size++;
         }
-
-
+        this.size++;
     }
 
     // add the item to the back
@@ -63,41 +59,34 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null) throw new IllegalArgumentException();
 
         Node node = new Node(item);
+
         if (size == 0){
             this.first = node;
             this.last = node;
-            this.size++;
         }else{
             this.last.next = node;
             node.prev = this.last;
-
             this.last = node;
-            this.size++;
         }
-
-
-
+        this.size++;
     }
 
     // remove and return the item from the front
     public Item removeFirst(){
         if(size == 0) throw new NoSuchElementException();
 
+        Item item = this.first.item;
         if (size == 1){
-            Item item = this.first.item;
             this.first = null;
             this.last = null;
 
-            this.size--;
-            return item;
         }else{
-            Item item = this.first.item;
             this.first = this.first.next;
             this.first.prev = null;
-
-            this.size--;
-            return item;
         }
+
+        this.size--;
+        return item;
 
     }
 
@@ -105,21 +94,18 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeLast(){
         if(size == 0) throw new NoSuchElementException();
 
+        Item item = this.last.item;
         if (size == 1){
-            Node last = this.last;
             this.first = null;
             this.last = null;
 
-            this.size--;
-            return last.item;
         }else{
-            Item item = this.last.item;
-            this.last = this.last.prev;
+            this.last = this.last.prev; // NULL POINTER
             this.last.next = null;
 
-            this.size--;
-            return item;
         }
+        this.size--;
+        return item;
     }
 
     // return an iterator over items in order from front to back
@@ -159,7 +145,6 @@ public class Deque<Item> implements Iterable<Item> {
         deque.addFirst(4);
         deque.addLast(5);
 
-        System.out.println(deque.removeFirst());
         deque.removeFirst();
         deque.removeFirst();
 
@@ -169,6 +154,12 @@ public class Deque<Item> implements Iterable<Item> {
         deque.removeLast();
         deque.removeLast();
         deque.removeLast();
+        deque.removeLast();
 
+
+
+        for(int i: deque){
+            System.out.println(i);
+        }
     }
 }
